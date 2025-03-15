@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FiMail, FiPhone, FiLinkedin, FiGithub, FiSend, FiUser, FiMessageSquare, FiTerminal, FiCpu } from 'react-icons/fi';
 import SectionWrapper from './SectionWrapper';
+import KeyboardContactFallback from './KeyboardContactFallback';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -80,250 +81,25 @@ const Contact: React.FC = () => {
       title="Contact Me"
       subtitle="COMMUNICATION_PORTAL // SUBJECT: HET KOTHARI // STATUS: ONLINE"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        {/* 3D Keyboard Contact Section */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
+          className="order-2 lg:order-1"
         >
-          <motion.div 
-            className="card p-8 h-full border border-primary border-opacity-20 relative overflow-hidden"
-            whileHover={{ 
-              boxShadow: "0 15px 30px rgba(2, 6, 23, 0.8)",
-              borderColor: "rgba(26, 219, 188, 0.5)"
-            }}
-          >
-            {/* Animated background effect */}
-            <motion.div 
-              className="absolute inset-0 bg-primary opacity-0 z-0"
-              animate={{ opacity: [0, 0.02, 0] }}
-              transition={{ duration: 4, repeat: Infinity }}
-            />
-            
-            {/* Data points */}
-            {dataPoints.map((point, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-primary rounded-full pointer-events-none"
-                style={{
-                  left: `${point.x}%`,
-                  top: `${point.y}%`,
-                  width: point.size,
-                  height: point.size
-                }}
-                animate={{ 
-                  opacity: [0, 0.5, 0],
-                  scale: [0, 1, 0]
-                }}
-                transition={{ 
-                  duration: 4,
-                  repeat: Infinity,
-                  delay: point.delay
-                }}
-              />
-            ))}
-            
-            {/* Animated scan line */}
-            <motion.div 
-              className="absolute left-0 w-full h-0.5 bg-primary opacity-10 z-0"
-              animate={{ top: ['0%', '100%', '0%'] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-            />
-            
-            <div className="flex items-center mb-6 relative z-10">
-              <div className="w-12 h-12 rounded-md bg-primary bg-opacity-10 border border-primary border-opacity-30 flex items-center justify-center text-primary mr-4 relative">
-                <FiTerminal size={20} />
-                <motion.div 
-                  className="absolute inset-0 border border-primary opacity-30 rounded-md"
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-primary font-mono">CONTACT_DATA</h3>
-                <motion.div 
-                  className="h-1 w-16 bg-primary opacity-20 rounded-full mt-1"
-                  animate={{ width: ['4rem', '6rem', '4rem'] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                />
-              </div>
-            </div>
-            
-            <p className="text-slate-300 mb-8 font-mono text-sm relative z-10">
-              <motion.span 
-                className="text-primary inline-block mr-1"
-                animate={{ opacity: [1, 0.5, 1] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                &gt;
-              </motion.span>
-              Feel free to reach out to me for any questions, opportunities, or just to say hello. I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
-            </p>
-            
-            <motion.div 
-              className="space-y-6 relative z-10"
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-            >
-              <motion.div 
-                variants={itemVariants}
-                className="flex items-center"
-                whileHover={{ x: 5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                onMouseEnter={() => setHoveredContact('email')}
-                onMouseLeave={() => setHoveredContact(null)}
-              >
-                <div className="w-10 h-10 rounded-md bg-primary bg-opacity-10 flex items-center justify-center text-primary mr-4 border border-primary border-opacity-30 relative">
-                  <FiMail size={18} />
-                  {hoveredContact === 'email' && (
-                    <motion.div 
-                      className="absolute inset-0 border border-primary rounded-md"
-                      animate={{ scale: [1, 1.2, 1], opacity: [0.7, 0, 0.7] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    />
-                  )}
-                </div>
-                <div>
-                  <p className="text-xs text-slate-400 font-mono">EMAIL_ADDRESS</p>
-                  <a href="mailto:hetkothari.work@gmail.com" className="text-white hover:text-primary transition-colors font-mono text-sm group">
-                    hetkothari.work@gmail.com
-                    <motion.span 
-                      className="block h-px w-0 bg-primary"
-                      animate={hoveredContact === 'email' ? { width: '100%' } : {}}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </a>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                variants={itemVariants}
-                className="flex items-center"
-                whileHover={{ x: 5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                onMouseEnter={() => setHoveredContact('phone')}
-                onMouseLeave={() => setHoveredContact(null)}
-              >
-                <div className="w-10 h-10 rounded-md bg-primary bg-opacity-10 flex items-center justify-center text-primary mr-4 border border-primary border-opacity-30 relative">
-                  <FiPhone size={18} />
-                  {hoveredContact === 'phone' && (
-                    <motion.div 
-                      className="absolute inset-0 border border-primary rounded-md"
-                      animate={{ scale: [1, 1.2, 1], opacity: [0.7, 0, 0.7] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    />
-                  )}
-                </div>
-                <div>
-                  <p className="text-xs text-slate-400 font-mono">COMM_CHANNEL</p>
-                  <a href="tel:+919324119268" className="text-white hover:text-primary transition-colors font-mono text-sm">
-                    +91 9324119268
-                    <motion.span 
-                      className="block h-px w-0 bg-primary"
-                      animate={hoveredContact === 'phone' ? { width: '100%' } : {}}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </a>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                variants={itemVariants}
-                className="flex items-center"
-                whileHover={{ x: 5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                onMouseEnter={() => setHoveredContact('linkedin')}
-                onMouseLeave={() => setHoveredContact(null)}
-              >
-                <div className="w-10 h-10 rounded-md bg-primary bg-opacity-10 flex items-center justify-center text-primary mr-4 border border-primary border-opacity-30 relative">
-                  <FiLinkedin size={18} />
-                  {hoveredContact === 'linkedin' && (
-                    <motion.div 
-                      className="absolute inset-0 border border-primary rounded-md"
-                      animate={{ scale: [1, 1.2, 1], opacity: [0.7, 0, 0.7] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    />
-                  )}
-                </div>
-                <div>
-                  <p className="text-xs text-slate-400 font-mono">PROFESSIONAL_NETWORK</p>
-                  <a 
-                    href="https://linkedin.com/in/het-kothari" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-white hover:text-primary transition-colors font-mono text-sm"
-                  >
-                    linkedin.com/in/het-kothari
-                    <motion.span 
-                      className="block h-px w-0 bg-primary"
-                      animate={hoveredContact === 'linkedin' ? { width: '100%' } : {}}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </a>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                variants={itemVariants}
-                className="flex items-center"
-                whileHover={{ x: 5 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                onMouseEnter={() => setHoveredContact('github')}
-                onMouseLeave={() => setHoveredContact(null)}
-              >
-                <div className="w-10 h-10 rounded-md bg-primary bg-opacity-10 flex items-center justify-center text-primary mr-4 border border-primary border-opacity-30 relative">
-                  <FiGithub size={18} />
-                  {hoveredContact === 'github' && (
-                    <motion.div 
-                      className="absolute inset-0 border border-primary rounded-md"
-                      animate={{ scale: [1, 1.2, 1], opacity: [0.7, 0, 0.7] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    />
-                  )}
-                </div>
-                <div>
-                  <p className="text-xs text-slate-400 font-mono">CODE_REPOSITORY</p>
-                  <a 
-                    href="https://github.com/hetkothari09" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-white hover:text-primary transition-colors font-mono text-sm"
-                  >
-                    github.com/hetkothari09
-                    <motion.span 
-                      className="block h-px w-0 bg-primary"
-                      animate={hoveredContact === 'github' ? { width: '100%' } : {}}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </a>
-                </div>
-              </motion.div>
-            </motion.div>
-            
-            <div className="mt-8 pt-4 border-t border-primary border-opacity-10 relative z-10">
-              <div className="flex justify-between items-center">
-                <div className="text-xs font-mono text-slate-500">RESPONSE_TIME: 24-48 HRS</div>
-                <div className="text-xs font-mono text-primary flex items-center">
-                  <motion.div 
-                    className="w-1.5 h-1.5 bg-primary rounded-full mr-1.5"
-                    animate={{ opacity: [0.3, 1, 0.3] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  />
-                  STATUS: ACTIVE
-                </div>
-              </div>
-            </div>
-          </motion.div>
+          <KeyboardContactFallback isAvailable={true} />
         </motion.div>
         
+        {/* Contact Form */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
+          className="order-1 lg:order-2"
         >
           <form onSubmit={handleSubmit} className="card p-8 border border-primary border-opacity-20 relative overflow-hidden">
             {/* Animated background effect */}
