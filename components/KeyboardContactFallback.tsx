@@ -42,12 +42,12 @@ const KeyboardContactFallback: React.FC<KeyboardContactFallbackProps> = ({ isAva
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
-      className="w-full h-[600px] md:h-[700px] relative rounded-lg overflow-hidden border border-primary border-opacity-20 bg-gradient-to-b from-black to-gray-900 flex items-center justify-center"
+      className="w-full h-[550px] md:h-[600px] relative rounded-lg overflow-hidden border border-primary border-opacity-20 bg-gradient-to-b from-black to-gray-900 flex items-center justify-center"
       onMouseMove={handleMouseMove}
     >
       {/* Keyboard base with perspective effect */}
       <motion.div 
-        className="relative w-[95%] max-w-3xl perspective-1000"
+        className="relative w-[90%] max-w-2xl perspective-1000"
         animate={controls}
         style={{
           transform: `rotateX(15deg) rotateY(${(mousePosition.x - 0.5) * 8}deg)`
@@ -55,7 +55,7 @@ const KeyboardContactFallback: React.FC<KeyboardContactFallbackProps> = ({ isAva
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
       >
         {/* Keyboard body - dark gray base with shadow */}
-        <div className="relative keyboard-base bg-gray-900 rounded-xl p-6 shadow-[0_30px_70px_rgba(0,0,0,0.9)] border-2 border-gray-800">
+        <div className="relative keyboard-base bg-gray-900 rounded-xl p-5 shadow-[0_30px_70px_rgba(0,0,0,0.9)] border-2 border-gray-800">
           {/* Keyboard base shadow */}
           <div className="absolute -bottom-16 left-4 right-4 h-16 bg-black opacity-60 blur-md rounded-full"></div>
           
@@ -77,32 +77,12 @@ const KeyboardContactFallback: React.FC<KeyboardContactFallbackProps> = ({ isAva
           {/* Keyboard ambient lighting */}
           <div className="keyboard-ambient"></div>
           
-          {/* Keys container with 3D-like appearance - tighter grid */}
-          <div className="grid grid-cols-4 gap-5 p-5 transform-style-preserve-3d">
+          {/* Keys container with 3D-like appearance - grid with only 4 keys */}
+          <div className="grid grid-cols-2 gap-4 p-4 transform-style-preserve-3d">
             {/* Row 1 */}
             <KeyButton 
-              label="HIRE ME" 
-              icon={<FiSend size={32} />} 
-              color="#ff5555" 
-              link="mailto:hetkothari.work@gmail.com?subject=Job%20Opportunity"
-              isPressed={pressedKey === "HIRE ME"}
-              isHovered={hoveredKey === "HIRE ME"}
-              onPress={() => handleKeyPress("HIRE ME")}
-              onHover={(hovered) => setHoveredKey(hovered ? "HIRE ME" : null)}
-            />
-            <KeyButton 
-              label="CALL ME" 
-              icon={<FiPhone size={32} />} 
-              color="#5555ff" 
-              link="tel:+919324119268"
-              isPressed={pressedKey === "CALL ME"}
-              isHovered={hoveredKey === "CALL ME"}
-              onPress={() => handleKeyPress("CALL ME")}
-              onHover={(hovered) => setHoveredKey(hovered ? "CALL ME" : null)}
-            />
-            <KeyButton 
               label="@" 
-              icon={<FiMail size={32} />} 
+              icon={<FiMail size={28} />} 
               color="#55ff55" 
               link="mailto:hetkothari.work@gmail.com"
               isPressed={pressedKey === "@"}
@@ -112,7 +92,7 @@ const KeyboardContactFallback: React.FC<KeyboardContactFallbackProps> = ({ isAva
             />
             <KeyButton 
               label="GITHUB" 
-              icon={<FiGithub size={32} />} 
+              icon={<FiGithub size={28} />} 
               color="#ffaa00" 
               link="https://github.com/hetkothari09"
               isPressed={pressedKey === "GITHUB"}
@@ -124,9 +104,9 @@ const KeyboardContactFallback: React.FC<KeyboardContactFallbackProps> = ({ isAva
             {/* Row 2 */}
             <KeyButton 
               label="LINKEDIN" 
-              icon={<FiLinkedin size={32} />} 
+              icon={<FiLinkedin size={28} />} 
               color="#aa55ff" 
-              link="https://www.linkedin.com/in/het-kothari-8b6a1a1b9/"
+              link="https://www.linkedin.com/in/het-kothari/"
               isPressed={pressedKey === "LINKEDIN"}
               isHovered={hoveredKey === "LINKEDIN"}
               onPress={() => handleKeyPress("LINKEDIN")}
@@ -134,38 +114,18 @@ const KeyboardContactFallback: React.FC<KeyboardContactFallbackProps> = ({ isAva
             />
             <KeyButton 
               label="RESUME" 
-              icon={<FiDownload size={32} />} 
+              icon={<FiDownload size={28} />} 
               color="#ff55aa" 
-              link="/resume.pdf"
+              link="https://drive.google.com/file/d/1o2ydhIYeOwZr9E0TwUcrSvdV3F96uQ4U/view?usp=drive_link"
               isPressed={pressedKey === "RESUME"}
               isHovered={hoveredKey === "RESUME"}
               onPress={() => handleKeyPress("RESUME")}
               onHover={(hovered) => setHoveredKey(hovered ? "RESUME" : null)}
             />
-            <KeyButton 
-              label="PROJECTS" 
-              icon={<FiFolder size={32} />} 
-              color="#55ffff" 
-              link="#projects"
-              isPressed={pressedKey === "PROJECTS"}
-              isHovered={hoveredKey === "PROJECTS"}
-              onPress={() => handleKeyPress("PROJECTS")}
-              onHover={(hovered) => setHoveredKey(hovered ? "PROJECTS" : null)}
-            />
-            <KeyButton 
-              label="CONTACT" 
-              icon={<FiMessageSquare size={32} />} 
-              color="#ffff55" 
-              link="#contact"
-              isPressed={pressedKey === "CONTACT"}
-              isHovered={hoveredKey === "CONTACT"}
-              onPress={() => handleKeyPress("CONTACT")}
-              onHover={(hovered) => setHoveredKey(hovered ? "CONTACT" : null)}
-            />
           </div>
           
           {/* Keyboard reflection */}
-          <div className="absolute left-0 right-0 bottom-0 h-20 bg-gradient-to-b from-transparent to-black opacity-30"></div>
+          <div className="absolute left-0 right-0 bottom-0 h-16 bg-gradient-to-b from-transparent to-black opacity-30"></div>
         </div>
       </motion.div>
       
@@ -230,14 +190,14 @@ const KeyButton: React.FC<KeyButtonProps> = ({
       href={link}
       target={link.startsWith('http') ? '_blank' : undefined}
       rel={link.startsWith('http') ? 'noopener noreferrer' : undefined}
-      className={`relative flex flex-col items-center justify-center h-32 rounded-xl bg-black cursor-pointer overflow-hidden group key-3d keyboard-key bloated-key ${isPressed ? 'key-press key-press-depth' : ''} ${isHovered ? 'key-hover-pressed' : ''}`}
+      className={`relative flex flex-col items-center justify-center h-24 rounded-lg bg-black cursor-pointer overflow-hidden group key-3d keyboard-key bloated-key ${isPressed ? 'key-press key-press-depth' : ''} ${isHovered ? 'key-hover-pressed' : ''}`}
       style={{ 
         boxShadow: isHovered || isPressed 
-          ? `0 2px 0 rgba(0,0,0,0.7), 0 -1px 0 rgba(255,255,255,0.1) inset, 0 0 20px ${color}50 inset` 
-          : `0 12px 0 rgba(0,0,0,0.7), 0 -1px 0 rgba(255,255,255,0.1) inset, 0 0 15px ${color}40 inset`,
-        border: `2px solid ${color}80`,
+          ? `0 2px 0 rgba(0,0,0,0.7), 0 -1px 0 rgba(255,255,255,0.1) inset, 0 0 15px ${color}40 inset` 
+          : `0 10px 0 rgba(0,0,0,0.7), 0 -1px 0 rgba(255,255,255,0.1) inset, 0 0 10px ${color}30 inset`,
+        border: `2px solid ${color}60`,
         transform: isHovered || isPressed 
-          ? 'translateY(10px) scale(1.02)' 
+          ? 'translateY(8px) scale(1)' 
           : 'translateY(0) scale(1)',
         zIndex: isHovered ? 10 : 1,
         transition: 'all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
@@ -249,17 +209,32 @@ const KeyButton: React.FC<KeyButtonProps> = ({
       {/* Key top highlight */}
       <div className="key-highlight" style={{ opacity: isHovered ? 0.3 : 1 }}></div>
       
-      {/* Key sides for 3D effect */}
-      <div className="key-side-left" style={{ height: isHovered ? 'calc(100% - 10px)' : '100%' }}></div>
-      <div className="key-side-right" style={{ height: isHovered ? 'calc(100% - 10px)' : '100%' }}></div>
-      <div className="key-side-bottom" style={{ bottom: isHovered ? '-2px' : '-12px' }}></div>
+      {/* Key sides for 3D effect - hidden on hover */}
+      <div className="key-side-left" 
+        style={{ 
+          height: isHovered ? '100%' : '100%',
+          opacity: isHovered ? 0 : 1
+        }}
+      ></div>
+      <div className="key-side-right" 
+        style={{ 
+          height: isHovered ? '100%' : '100%',
+          opacity: isHovered ? 0 : 1
+        }}
+      ></div>
+      <div className="key-side-bottom" 
+        style={{ 
+          bottom: isHovered ? '-10px' : '-10px',
+          opacity: isHovered ? 0 : 1
+        }}
+      ></div>
       
       {/* Key lighting effect */}
       <div className="key-lighting"></div>
       
       {/* Key content */}
       <motion.div 
-        className="text-4xl mb-3 relative z-10"
+        className="text-3xl mb-2 relative z-10"
         style={{ color }}
         animate={{ 
           scale: isHovered ? 1.1 : 1,
@@ -269,24 +244,24 @@ const KeyButton: React.FC<KeyButtonProps> = ({
       >
         {icon}
       </motion.div>
-      <span className="font-mono text-base text-white relative z-10 font-bold">{label}</span>
+      <span className="font-mono text-sm text-white relative z-10 font-bold">{label}</span>
       
-      {/* Glow effect on hover/press */}
+      {/* Glow effect on hover/press - reduced */}
       <motion.div 
         className="absolute inset-0 opacity-0 z-0"
         style={{ backgroundColor: color }}
         animate={{ 
-          opacity: isPressed ? 0.6 : isHovered ? 0.4 : 0
+          opacity: isPressed ? 0.5 : isHovered ? 0.3 : 0
         }}
         transition={{ duration: 0.2 }}
       />
       
-      {/* Enhanced glow effect */}
+      {/* Enhanced glow effect - reduced */}
       <div 
-        className="key-enhanced-glow" 
+        className="key-enhanced-glow-reduced" 
         style={{ 
           backgroundColor: color,
-          opacity: isHovered ? 0.5 : 0
+          opacity: isHovered ? 0.3 : 0
         }}
       ></div>
       

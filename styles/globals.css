@@ -347,7 +347,7 @@ body {
   border-radius: 12px;
   box-shadow: 
     0 12px 0 rgba(0, 0, 0, 0.7),
-    0 0 15px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(0, 0, 0, 0.3),
     0 0 0 2px rgba(255, 255, 255, 0.05) inset;
   overflow: visible;
 }
@@ -373,7 +373,7 @@ body {
 .bloated-key:hover {
   box-shadow: 
     0 2px 0 rgba(0, 0, 0, 0.7),
-    0 0 20px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(0, 0, 0, 0.5),
     0 0 0 2px rgba(255, 255, 255, 0.1) inset;
 }
 
@@ -463,16 +463,31 @@ body {
 /* Enhanced glow effect for keys */
 .key-enhanced-glow {
   position: absolute;
-  inset: -6px;
+  inset: -8px;
   border-radius: inherit;
   opacity: 0;
   z-index: -1;
-  filter: blur(12px);
+  filter: blur(15px);
+  transition: opacity 0.3s ease;
+}
+
+/* Reduced glow effect for keys */
+.key-enhanced-glow-reduced {
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  opacity: 0;
+  z-index: -1;
+  filter: blur(8px);
   transition: opacity 0.3s ease;
 }
 
 .keyboard-key:hover .key-enhanced-glow {
-  opacity: 0.5;
+  opacity: 0.7;
+}
+
+.keyboard-key:hover .key-enhanced-glow-reduced {
+  opacity: 0.3;
 }
 
 /* Keyboard ambient lighting */
