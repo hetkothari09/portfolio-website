@@ -16,7 +16,9 @@ const Projects: React.FC = () => {
       tags: ['OpenAI API', 'GPT-3.5', 'Fine-tuning', 'Python', 'React'],
       image: '/images/project1.jpg',
       icon: <FiCode size={24} />,
-      status: 'COMPLETED'
+      status: 'COMPLETED',
+      github: 'https://github.com/hetkothari09/ai-strategy-form-generator',
+      live: null
     },
     {
       title: 'Automated Financial Data Processing System',
@@ -26,7 +28,9 @@ const Projects: React.FC = () => {
       tags: ['Python', 'Pandas', 'Automation', 'Financial Analysis', 'Data Processing'],
       image: '/images/project2.jpg',
       icon: <FiDatabase size={24} />,
-      status: 'DEPLOYED'
+      status: 'DEPLOYED',
+      github: 'https://github.com/hetkothari09/financial-automation-system',
+      live: null
     },
     {
       title: 'AI-driven Predictive Analysis for Business Intelligence',
@@ -36,7 +40,9 @@ const Projects: React.FC = () => {
       tags: ['AI', 'Predictive Analytics', 'Business Intelligence', 'Data Visualization', 'Python'],
       image: '/images/project3.jpg',
       icon: <FiTerminal size={24} />,
-      status: 'IN_PROGRESS'
+      status: 'IN_PROGRESS',
+      github: 'https://github.com/hetkothari09/predictive-bi-analytics',
+      live: null
     },
     {
       title: 'SmallBizMart: E-Commerce Platform',
@@ -46,7 +52,9 @@ const Projects: React.FC = () => {
       tags: ['E-commerce', 'Web Development', 'React', 'Node.js', 'MongoDB'],
       image: '/images/smallbizmart.jpg',
       icon: <FiCode size={24} />,
-      status: 'ARCHIVED'
+      status: 'ARCHIVED',
+      github: 'https://github.com/hetkothari09/Ecommerce-application-project',
+      live: 'https://smallbizmart.netlify.app/'
     }
   ];
 
@@ -107,20 +115,28 @@ const Projects: React.FC = () => {
             />
             
             {/* Project image */}
-            <div className="relative h-72 w-full">
+            <div className="relative h-72 w-full overflow-hidden">
+              <div className="absolute inset-0 bg-[#0a0a0a]"></div>
               {project.image && (
-                <Image 
-                  src={project.image} 
-                  alt={project.title}
-                  fill
-                  style={{ objectFit: 'cover' }}
-                  className="transition-all duration-500 filter blur-[2px]"
-                  quality={90}
-                />
+                <div className="absolute inset-0 opacity-90">
+                  <Image 
+                    src={project.image} 
+                    alt={project.title}
+                    fill
+                    style={{ objectFit: 'cover' }}
+                    className="transition-all duration-500 filter blur-[2px]"
+                    quality={90}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
+                    priority={index < 2}
+                  />
+                </div>
               )}
               
-              {/* Overlay gradient - made slightly darker for better readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[rgba(10,10,10,0.6)] to-[rgba(10,10,10,0.3)]"></div>
+              {/* Overlay with smoother gradient transition */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[rgba(10,10,10,0.5)] to-[rgba(10,10,10,0.2)]"></div>
+              
+              {/* Bottom blend to eliminate line */}
+              <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-[#0a0a0a] to-transparent"></div>
               
               {/* Status badge */}
               <div className="absolute top-6 right-6 bg-black bg-opacity-70 px-3 py-1 rounded-full border border-primary border-opacity-30 z-10">
@@ -216,9 +232,9 @@ const Projects: React.FC = () => {
               </div>
               
               <div className="flex justify-end mt-auto">
-                {project.title === 'SmallBizMart: E-Commerce Platform' && (
+                {project.live && (
                   <motion.a 
-                    href="https://smallbizmart.netlify.app/" 
+                    href={project.live}
                     className="flex items-center justify-center w-10 h-10 rounded-full bg-black border border-primary border-opacity-30 text-primary mr-2"
                     whileHover={{ 
                       scale: 1.1, 
@@ -226,26 +242,28 @@ const Projects: React.FC = () => {
                       borderColor: "rgba(26, 219, 188, 0.7)"
                     }}
                     transition={{ duration: 0.2 }}
-                    target="_blank"
+                    target="_blank" 
                     rel="noopener noreferrer"
                   >
                     <FiExternalLink size={18} />
                   </motion.a>
                 )}
-                <motion.a 
-                  href="https://github.com/hetkothari09/Ecommerce-application-project" 
-                  className="flex items-center justify-center w-10 h-10 rounded-full bg-black border border-primary border-opacity-30 text-primary"
-                  whileHover={{ 
-                    scale: 1.1, 
-                    backgroundColor: "rgba(26, 219, 188, 0.1)",
-                    borderColor: "rgba(26, 219, 188, 0.7)"
-                  }}
-                  transition={{ duration: 0.2 }}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FiGithub size={18} />
-                </motion.a>
+                {project.github && (
+                  <motion.a 
+                    href={project.github}
+                    className="flex items-center justify-center w-10 h-10 rounded-full bg-black border border-primary border-opacity-30 text-primary"
+                    whileHover={{ 
+                      scale: 1.1, 
+                      backgroundColor: "rgba(26, 219, 188, 0.1)",
+                      borderColor: "rgba(26, 219, 188, 0.7)"
+                    }}
+                    transition={{ duration: 0.2 }}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
+                    <FiGithub size={18} />
+                  </motion.a>
+                )}
               </div>
             </div>
           </motion.div>

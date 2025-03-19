@@ -116,7 +116,7 @@ const KeyboardContactFallback: React.FC<KeyboardContactFallbackProps> = ({ isAva
               label="RESUME" 
               icon={<FiDownload size={28} />} 
               color="#ff55aa" 
-              link="https://drive.google.com/file/d/1o2ydhIYeOwZr9E0TwUcrSvdV3F96uQ4U/view?usp=drive_link"
+              link="https://drive.google.com/file/d/1MLnjrSKeieNwKAIqgpdW1jf4gEqH00_v/view?usp=drive_link"
               isPressed={pressedKey === "RESUME"}
               isHovered={hoveredKey === "RESUME"}
               onPress={() => handleKeyPress("RESUME")}

@@ -23,6 +23,8 @@ html {
 body {
   @apply bg-black text-slate-200;
   font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* Grid pattern background */
@@ -33,31 +35,67 @@ body {
   background-size: 20px 20px;
 }
 
-/* Star background animation */
-.stars {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: -1;
+/* Circuit pattern animation */
+.bg-circuit-pattern {
+  background-image: 
+    linear-gradient(to right, var(--color-primary) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-primary) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.03;
+  animation: circuitFlow 20s linear infinite;
 }
 
+@keyframes circuitFlow {
+  0% {
+    background-position: 0 0;
+    opacity: 0.02;
+  }
+  25% {
+    opacity: 0.03;
+  }
+  50% {
+    background-position: 20px 20px;
+    opacity: 0.04;
+  }
+  75% {
+    opacity: 0.03;
+  }
+  100% {
+    background-position: 40px 40px;
+    opacity: 0.02;
+  }
+}
+
+/* Add a radial gradient overlay */
+.bg-gradient-radial {
+  background: radial-gradient(
+    circle at center,
+    var(--color-primary) 0%,
+    transparent 70%
+  );
+  opacity: 0.05;
+  animation: pulseGradient 8s ease-in-out infinite;
+}
+
+@keyframes pulseGradient {
+  0%, 100% { opacity: 0.03; }
+  50% { opacity: 0.05; }
+}
+
+/* Star animation */
 .star {
   position: absolute;
-  width: 2px;
-  height: 2px;
   background-color: var(--color-star);
   border-radius: 50%;
   opacity: 0;
-  animation: twinkle var(--duration) infinite;
-  animation-delay: var(--delay);
+  will-change: opacity;
+  animation: twinkle 3s ease-in-out infinite;
 }
 
 @keyframes twinkle {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
+  0% { opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0; }
 }
 
 /* Name styling */
@@ -561,4 +599,109 @@ body {
   inset: 0;
   background: radial-gradient(circle at center, rgba(26, 219, 188, 0.05), transparent 70%);
   pointer-events: none;
+}
+
+/* Custom cursor styling */
+.custom-cursor-outer,
+.custom-cursor-inner {
+  pointer-events: none;
+  position: fixed;
+  border-radius: 50%;
+  z-index: 9999;
+  transition: transform 0.1s ease;
+  mix-blend-mode: difference;
+}
+
+.custom-cursor-outer {
+  width: 30px;
+  height: 30px;
+  border: 2px solid var(--color-primary);
+  transition: transform 0.15s ease-out, opacity 0.3s ease;
+}
+
+.custom-cursor-inner {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-primary);
+  transition: transform 0.08s ease-out, opacity 0.3s ease, width 0.2s ease, height 0.2s ease;
+}
+
+.cursor-hover .custom-cursor-outer {
+  transform: scale(1.5);
+  opacity: 0.5;
+}
+
+.cursor-hover .custom-cursor-inner {
+  transform: scale(1.5);
+  background-color: white;
+}
+
+.cursor-click .custom-cursor-outer {
+  transform: scale(0.8);
+}
+
+.cursor-click .custom-cursor-inner {
+  transform: scale(0.6);
+}
+
+.cursor-hidden {
+  opacity: 0 !important;
+}
+
+/* Hide default cursor when custom cursor is active */
+html.custom-cursor-active,
+html.custom-cursor-active * {
+  cursor: none !important;
+}
+
+/* Text selection style */
+::selection {
+  background-color: var(--color-primary);
+  color: black;
+}
+
+/* Additional Responsive Improvements */
+@media (max-width: 640px) {
+  /* Improve touch target sizes on mobile */
+  button, 
+  a,
+  .hoverable {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Ensure text remains readable on small screens */
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
+/* Ensure images and videos are responsive */
+img, 
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent horizontal overflow */
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+/* Improve focus states for accessibility */
+:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Ensure smooth transitions on all devices */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 } 

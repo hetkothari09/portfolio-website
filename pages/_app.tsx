@@ -22,9 +22,8 @@ function MyApp({ Component, pageProps, router }: AppProps) {
       <Head>
         <title>Het Kothari - Portfolio</title>
         <meta name="description" content="Het Kothari's personal portfolio website showcasing skills, projects, and experience in software development, data analysis, and AI." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0" />
         <link rel="icon" href="/favicon.ico" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Head>
       
       {loading ? (

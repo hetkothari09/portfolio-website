@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
 
 const Navbar: React.FC = () => {
@@ -32,6 +32,18 @@ const Navbar: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Close mobile menu when resizing to desktop
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768 && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isOpen]);
 
   const navLinks = [
     { name: 'HOME', href: '#home' },
@@ -85,29 +97,31 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Navigation Menu */}
-      {isOpen && (
-        <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden glass-effect border-t border-primary border-opacity-20"
-        >
-          <div className="px-4 py-5 space-y-4">
-            {navLinks.map((link, index) => (
-              <Link 
-                key={link.name} 
-                href={link.href}
-                className={`block nav-link font-mono text-xs ${activeSection === link.href.substring(1) ? 'active' : ''}`}
-                onClick={() => setIsOpen(false)}
-              >
-                <span className="text-primary mr-1">{String(index + 1).padStart(2, '0')}.</span>
-                {link.name}
-              </Link>
-            ))}
-          </div>
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden glass-effect border-t border-primary border-opacity-20 overflow-hidden"
+          >
+            <div className="px-4 py-5 space-y-4">
+              {navLinks.map((link, index) => (
+                <Link 
+                  key={link.name} 
+                  href={link.href}
+                  className={`block nav-link font-mono text-xs ${activeSection === link.href.substring(1) ? 'active' : ''}`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  <span className="text-primary mr-1">{String(index + 1).padStart(2, '0')}.</span>
+                  {link.name}
+                </Link>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

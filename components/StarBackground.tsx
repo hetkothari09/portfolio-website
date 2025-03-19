@@ -1,56 +1,63 @@
-import React, { useEffect, useRef } from 'react';
-
-interface Star {
-  x: number;
-  y: number;
-  size: number;
-  duration: number;
-  delay: number;
-}
+import React, { useEffect, useState } from 'react';
 
 const StarBackground: React.FC = () => {
-  const starsRef = useRef<HTMLDivElement>(null);
-  
+  const [stars, setStars] = useState<{ id: number; style: React.CSSProperties }[]>([]);
+  const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
-    if (!starsRef.current) return;
+    // Check if device is mobile for performance optimization
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
     
-    const container = starsRef.current;
-    const stars: Star[] = [];
-    const starCount = 150;
+    // Run initial check
+    checkMobile();
     
-    // Clear any existing stars
-    container.innerHTML = '';
+    // Add resize listener
+    window.addEventListener('resize', checkMobile);
+
+    // Create stars based on device capability
+    const starCount = isMobile ? 30 : 50;
+    const newStars = [];
     
-    // Create stars
     for (let i = 0; i < starCount; i++) {
-      const star: Star = {
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        size: Math.random() * 2 + 1,
-        duration: Math.random() * 3 + 2,
-        delay: Math.random() * 5
-      };
+      const randomSize = Math.random() * 2 + 1;
+      const randomX = Math.random() * 100;
+      const randomY = Math.random() * 100;
+      const randomDelay = Math.random() * 3;
+      const randomDuration = Math.random() * 2 + 2;
       
-      stars.push(star);
-      
-      const starElement = document.createElement('div');
-      starElement.className = 'star';
-      starElement.style.left = `${star.x}%`;
-      starElement.style.top = `${star.y}%`;
-      starElement.style.width = `${star.size}px`;
-      starElement.style.height = `${star.size}px`;
-      starElement.style.setProperty('--duration', `${star.duration}s`);
-      starElement.style.setProperty('--delay', `${star.delay}s`);
-      
-      container.appendChild(starElement);
+      newStars.push({
+        id: i,
+        style: {
+          width: `${randomSize}px`,
+          height: `${randomSize}px`,
+          left: `${randomX}%`,
+          top: `${randomY}%`,
+          animationDelay: `${randomDelay}s`,
+          animationDuration: `${randomDuration}s`
+        }
+      });
     }
     
+    setStars(newStars);
+    
     return () => {
-      container.innerHTML = '';
+      window.removeEventListener('resize', checkMobile);
     };
-  }, []);
+  }, [isMobile]);
   
-  return <div ref={starsRef} className="stars" />;
+  return (
+    <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+      {stars.map(star => (
+        <div
+          key={star.id}
+          className="star"
+          style={star.style}
+        />
+      ))}
+    </div>
+  );
 };
 
 export default StarBackground; 
