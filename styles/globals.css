@@ -27,6 +27,61 @@ body {
   width: 100%;
 }
 
+/* 3D Model Container Styles */
+.sketchfab-embed-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.sketchfab-embed-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 30px rgba(26, 219, 188, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.model-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 0.5rem;
+  z-index: 10;
+}
+
+.model-scan-line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+  animation: modelScanLine 3s linear infinite;
+  z-index: 5;
+  opacity: 0.6;
+}
+
+@keyframes modelScanLine {
+  0% {
+    top: 0%;
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    top: 100%;
+    opacity: 0.2;
+  }
+}
+
 /* Grid pattern background */
 .bg-grid-pattern {
   background-image: 
@@ -704,4 +759,56 @@ video {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* 3D Section Card Effects */
+.section-3d-card {
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  perspective: 1200px;
+}
+
+.section-3d-card:hover {
+  box-shadow: 0 25px 50px -12px rgba(26, 219, 188, 0.2);
+}
+
+.section-3d-card-inner {
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease-out;
+  will-change: transform;
+}
+
+.section-3d-card:hover .section-3d-card-inner {
+  transform: translateZ(20px);
+}
+
+.section-3d-card-glow {
+  background: radial-gradient(
+    circle at var(--x) var(--y),
+    rgba(26, 219, 188, 0.15) 0%,
+    rgba(26, 219, 188, 0) 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.section-3d-card:hover .section-3d-card-glow {
+  opacity: 1;
+}
+
+.section-3d-card-highlight {
+  --x-px: calc(var(--x) * 1px);
+  --y-px: calc(var(--y) * 1px);
+  background: radial-gradient(
+    circle at var(--x-px) var(--y-px),
+    rgba(26, 219, 188, 0.05) 0%,
+    rgba(26, 219, 188, 0) 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.section-3d-card:hover .section-3d-card-highlight {
+  opacity: 1;
 } 

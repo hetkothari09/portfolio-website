@@ -15,6 +15,7 @@ import {
 import { DiPython } from 'react-icons/di';
 import { BsWindowStack, BsMicrosoft } from 'react-icons/bs';
 import SectionWrapper from './SectionWrapper';
+import Section3DCard from './Section3DCard';
 
 const Skills: React.FC = () => {
   const skillCategories = [
@@ -132,183 +133,92 @@ const Skills: React.FC = () => {
     }
   };
 
+  const getIconSize = (screenSize: string): number => {
+    const sizes = {
+      xs: 22,   // Extra small screens
+      sm: 26,   // Small screens
+      md: 28,   // Medium screens
+      lg: 32    // Large screens
+    };
+    return sizes[screenSize as keyof typeof sizes];
+  };
+
   return (
     <SectionWrapper
       id="skills"
       title="Skills"
       subtitle="SKILL_MATRIX // SUBJECT: HET KOTHARI // PROFICIENCY: ADVANCED"
     >
-      <div className="mb-20">
-        <motion.h3 
-          className="text-xl font-bold text-center mb-12 font-mono text-primary"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <motion.span
-            animate={{ opacity: [1, 0.5, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="inline-block mr-2"
-          >
-            &gt;
-          </motion.span>
-          TECHNICAL_CAPABILITIES
-        </motion.h3>
-        
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {skillCategories.map((category, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              className="card p-6 h-full bg-[#0A101F]/80 border border-primary/20 rounded-lg relative overflow-hidden hover:border-primary/50 hover:shadow-[0_8px_20px_rgba(2,6,23,0.5)]"
-            >
-              <div className="flex items-center mb-8 relative z-10">
-                <div className="w-12 h-12 rounded-lg bg-primary/5 border border-primary/20 flex items-center justify-center text-primary mr-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        {skillCategories.map((category, i) => (
+          <Section3DCard key={i} className="h-full">
+            <div className="h-full">
+              {/* Category Header */}
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="w-10 h-10 rounded-md bg-primary bg-opacity-10 flex items-center justify-center text-primary border border-primary border-opacity-30">
                   {category.icon}
                 </div>
                 <div>
-                  <h4 className="text-lg font-bold text-primary/90 font-mono">{category.title}</h4>
-                  <div className="h-0.5 w-16 bg-primary/20 rounded-full mt-2"></div>
+                  <h3 className="text-xl font-bold text-primary font-mono">{category.title.toUpperCase()}</h3>
+                  <div className="h-1 w-16 bg-primary opacity-20 rounded-full mt-1"></div>
                 </div>
               </div>
               
-              <div className="grid grid-cols-3 sm:grid-cols-4 gap-2.5 relative z-10">
-                {category.skills.map((skill, skillIndex) => (
-                  <motion.div 
-                    key={skillIndex} 
-                    className="flex flex-col items-center justify-center bg-black/40 p-2.5 rounded-lg border border-primary/20 hover:border-primary/50 hover:shadow-[0_0_15px_rgba(26,219,188,0.2)]"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
+              {/* Skills Grid */}
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
+                {category.skills.map((skill, j) => (
+                  <motion.div
+                    key={j}
+                    className="flex flex-col items-center justify-center p-2 rounded-lg text-center"
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 10 }}
                   >
-                    <div className="flex items-center justify-center h-8 mb-2">
+                    <div className="mb-2">
                       {skill.icon}
                     </div>
-                    <span className="text-[10px] text-center font-mono text-slate-300 leading-tight">{skill.name}</span>
+                    <span className="text-xs text-slate-300 font-mono">{skill.name}</span>
                   </motion.div>
                 ))}
               </div>
-              
-              <div className="mt-6 pt-4 border-t border-primary/10">
-                <div className="flex justify-between items-center">
-                  <div className="text-[10px] font-mono text-slate-500">ID: {category.id}</div>
-                  <div className="text-[10px] font-mono text-primary/80 flex items-center">
-                    <motion.div 
-                      className="w-1.5 h-1.5 bg-primary rounded-full mr-1.5"
-                      animate={{ opacity: [0.3, 1, 0.3] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    />
-                    PROFICIENCY: HIGH
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+            </div>
+          </Section3DCard>
+        ))}
       </div>
       
-      <div>
-        <motion.h3 
-          className="text-xl font-bold text-center mb-12 font-mono text-primary"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <motion.span
-            animate={{ opacity: [1, 0.5, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="inline-block mr-2"
-          >
-            &gt;
-          </motion.span>
-          HUMAN_ATTRIBUTES
-        </motion.h3>
-        
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="card p-8 border border-primary border-opacity-20 relative overflow-hidden"
-          whileHover={{ 
-            boxShadow: "0 15px 30px rgba(2, 6, 23, 0.8)",
-            borderColor: "rgba(26, 219, 188, 0.5)"
-          }}
-        >
-          {/* Animated background effect */}
-          <motion.div 
-            className="absolute inset-0 bg-primary opacity-0 z-0"
-            whileHover={{ opacity: 0.03 }}
-            transition={{ duration: 0.3 }}
-          />
+      <Section3DCard>
+        <div className="space-y-4">
+          <div className="flex items-center space-x-3 mb-4">
+            <div className="w-10 h-10 rounded-md bg-primary bg-opacity-10 flex items-center justify-center text-primary border border-primary border-opacity-30">
+              <FiHeart size={20} />
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-primary font-mono">HUMAN_ATTRIBUTES</h3>
+              <div className="h-1 w-16 bg-primary opacity-20 rounded-full mt-1"></div>
+            </div>
+          </div>
           
-          {/* Animated scan lines */}
+          {/* Animated scan line */}
           <motion.div 
             className="absolute left-0 w-full h-0.5 bg-primary opacity-10 z-0"
             animate={{ top: ['0%', '100%', '0%'] }}
             transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
           />
           
-          <div className="flex items-center mb-8 relative z-10">
-            <div className="w-12 h-12 rounded-md bg-primary bg-opacity-10 border border-primary border-opacity-30 flex items-center justify-center text-primary mr-4 relative">
-              <FiHeart size={24} />
-              <motion.div 
-                className="absolute inset-0 border border-primary opacity-30 rounded-md"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-            </div>
-            <div>
-              <h4 className="text-lg font-bold text-primary font-mono">Personal Attributes</h4>
-              <div className="h-1 w-16 bg-primary opacity-20 rounded-full mt-1"></div>
-            </div>
-          </div>
-          
-          <motion.div
-            className="flex flex-wrap gap-3 justify-center relative z-10"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
+          <div className="flex flex-wrap gap-3 justify-center">
             {softSkills.map((skill, index) => (
               <motion.div
                 key={index}
-                variants={itemVariants}
-                className="relative"
+                whileHover={{ scale: 1.1 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 10 }}
               >
-                <motion.span
-                  className="bg-black/40 text-primary/90 text-xs px-4 py-2 rounded-lg border border-primary/20 inline-block font-mono relative overflow-hidden hover:border-primary/50 hover:shadow-[0_0_15px_rgba(26,219,188,0.2)]"
-                >
+                <span className="bg-primary/10 text-primary px-4 py-2 rounded-lg border border-primary/20 inline-block font-mono text-sm">
                   {skill}
-                </motion.span>
+                </span>
               </motion.div>
             ))}
-          </motion.div>
-          
-          <div className="mt-8">
-            <div className="flex justify-between items-center">
-              <div className="text-xs font-mono text-slate-500">ID: SOFT_SKILLS</div>
-              <div className="text-xs font-mono text-primary flex items-center">
-                <motion.div 
-                  className="w-1.5 h-1.5 bg-primary rounded-full mr-1.5"
-                  animate={{ opacity: [0.3, 1, 0.3] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                />
-                ASSESSMENT: EXCEPTIONAL
-              </div>
-            </div>
           </div>
-        </motion.div>
-      </div>
+        </div>
+      </Section3DCard>
     </SectionWrapper>
   );
 };

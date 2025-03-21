@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { FiExternalLink, FiGithub, FiCalendar, FiTag, FiTerminal, FiCode, FiDatabase } from 'react-icons/fi';
 import SectionWrapper from './SectionWrapper';
 import Image from 'next/image';
+import Section3DCard from './Section3DCard';
 
 const Projects: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -49,226 +50,109 @@ const Projects: React.FC = () => {
       subtitle: 'Empowering Local Businesses in the Digital Era',
       period: '2021 - 2022',
       description: 'Created a user-friendly e-commerce platform, sponsored by two companies, tailored for small businesses for seamless shopping experiences and with the tools to thrive in the digital marketplace.',
-      tags: ['E-commerce', 'Web Development', 'React', 'Node.js', 'MongoDB'],
-      image: '/images/smallbizmart.jpg',
-      icon: <FiCode size={24} />,
-      status: 'ARCHIVED',
+      tags: ['React', 'Node.js', 'MongoDB', 'Express', 'Stripe'],
+      image: '/images/project4.jpg',
+      icon: <FiDatabase size={24} />,
+      status: 'COMPLETED',
       github: 'https://github.com/hetkothari09/Ecommerce-application-project',
       live: 'https://smallbizmart.netlify.app/'
     }
   ];
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.5 }
-    }
-  };
-
+  
   return (
-    <SectionWrapper
-      id="projects"
-      title="Projects"
-      subtitle="PROJECT_DATABASE // SUBJECT: HET KOTHARI // CLEARANCE: LEVEL 2"
-    >
-      <motion.div 
-        className="grid grid-cols-1 md:grid-cols-2 gap-10"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
+    <SectionWrapper id="projects" title="My Projects" subtitle="SYSTEM DIRECTORY // CLEARANCE: CONFIDENTIAL // PROJECT RECORDS">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
         {projects.map((project, index) => (
-          <motion.div
-            key={index}
-            variants={itemVariants}
-            className="card overflow-hidden flex flex-col h-full bg-[#0a0a0a] border border-primary border-opacity-20 rounded-lg relative"
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
-            whileHover={{ 
-              y: -10,
-              boxShadow: "0 20px 40px rgba(2, 6, 23, 0.8)",
-              borderColor: "rgba(26, 219, 188, 0.5)"
-            }}
-          >
-            {/* Animated border effect */}
-            <motion.div 
-              className="absolute inset-0 border border-primary opacity-0 rounded-lg pointer-events-none z-10"
-              animate={hoveredIndex === index ? {
-                opacity: [0, 0.5, 0],
-                scale: [1, 1.05, 1]
-              } : {}}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            />
-            
-            {/* Project image */}
-            <div className="relative h-72 w-full overflow-hidden">
-              <div className="absolute inset-0 bg-[#0a0a0a]"></div>
-              {project.image && (
-                <div className="absolute inset-0 opacity-90">
-                  <Image 
-                    src={project.image} 
-                    alt={project.title}
-                    fill
-                    style={{ objectFit: 'cover' }}
-                    className="transition-all duration-500 filter blur-[2px]"
-                    quality={90}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw"
-                    priority={index < 2}
-                  />
+          <Section3DCard key={index} className="h-full">
+            <div className="h-full">
+              {/* Project Image with Overlay */}
+              <div className="relative aspect-video w-full overflow-hidden rounded-lg mb-6">
+                <div className="absolute inset-0 bg-black/40 z-10"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  className="object-cover w-full h-full blur-[1px]"
+                  width={640}
+                  height={360}
+                  priority={index < 2}
+                  unoptimized={true}
+                />
+
+                {/* Status Badge */}
+                <div className="absolute top-3 left-3 bg-black/70 px-2 py-1 rounded text-xs font-mono border border-primary/30 text-primary z-20">
+                  {project.status}
                 </div>
-              )}
-              
-              {/* Overlay with smoother gradient transition */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[rgba(10,10,10,0.5)] to-[rgba(10,10,10,0.2)]"></div>
-              
-              {/* Bottom blend to eliminate line */}
-              <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-[#0a0a0a] to-transparent"></div>
-              
-              {/* Status badge */}
-              <div className="absolute top-6 right-6 bg-black bg-opacity-70 px-3 py-1 rounded-full border border-primary border-opacity-30 z-10">
-                <div className="flex items-center space-x-2">
-                  <motion.div 
-                    className="w-1.5 h-1.5 rounded-full"
-                    style={{ 
-                      backgroundColor: 
-                        project.status === 'IN_PROGRESS' ? '#f59e0b' : 
-                        project.status === 'COMPLETED' ? '#10b981' :
-                        project.status === 'DEPLOYED' ? '#3b82f6' : '#ef4444'
-                    }}
-                    animate={{ 
-                      opacity: project.status === 'IN_PROGRESS' ? [0.5, 1, 0.5] : [0.7, 1, 0.7]
-                    }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                  />
-                  <span className="text-xs font-mono text-white">{project.status}</span>
+
+                {/* Icon */}
+                <div className="absolute bottom-4 right-4 w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center border border-primary/30 text-primary z-20">
+                  {project.icon}
                 </div>
               </div>
-              
-              {/* Project number */}
-              <div className="absolute top-6 left-6 z-10">
-                <div className="flex items-center space-x-2">
-                  <span className="text-xs font-mono text-primary px-2 py-1 bg-black bg-opacity-70 rounded-md border border-primary border-opacity-30">
-                    PROJECT_{index + 1}
-                  </span>
+
+              {/* Content */}
+              <div className="space-y-4">
+                {/* Title & Subtitle */}
+                <div>
+                  <h3 className="text-xl font-bold">{project.title}</h3>
+                  <p className="text-primary text-sm">{project.subtitle}</p>
                 </div>
-              </div>
-              
-              {/* Project title overlay - visible only on hover */}
-              {hoveredIndex === index && (
-                <motion.div 
-                  className="absolute inset-0 flex items-center justify-center z-10 bg-black bg-opacity-30 backdrop-blur-sm"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="text-center px-6">
-                    <motion.div
-                      initial={{ scale: 0.9, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      transition={{ delay: 0.1, duration: 0.3 }}
-                    >
-                      {project.icon && (
-                        <div className="flex justify-center mb-3">
-                          <div className="text-primary text-3xl">
-                            {project.icon}
-                          </div>
-                        </div>
-                      )}
-                      <h3 className="text-2xl font-bold text-white mb-2">{project.title}</h3>
-                      <p className="text-primary text-sm">{project.subtitle}</p>
-                    </motion.div>
-                  </div>
-                </motion.div>
-              )}
-            </div>
-            
-            {/* Content */}
-            <div className="p-6 flex-grow flex flex-col">
-              <div className="mb-4">
-                <h3 className="text-xl font-bold text-primary mb-1">{project.title}</h3>
-                <div className="flex items-center text-slate-400 text-xs">
-                  <FiCalendar className="mr-2 text-primary" />
+
+                {/* Period */}
+                <div className="flex items-center space-x-2 text-xs text-slate-400">
+                  <FiCalendar size={14} />
                   <span>{project.period}</span>
                 </div>
-              </div>
-              
-              <p className="text-slate-300 text-sm mb-5 flex-grow">
-                {project.description}
-              </p>
-              
-              <div className="mb-5">
-                <div className="flex flex-wrap gap-2 mb-2">
+
+                {/* Description */}
+                <p className="text-sm text-slate-300">{project.description}</p>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2 mt-4">
+                  <div className="flex items-center space-x-1 text-xs text-slate-400 mr-2">
+                    <FiTag size={14} />
+                    <span>TECH STACK:</span>
+                  </div>
                   {project.tags.map((tag, tagIndex) => (
-                    <motion.span 
-                      key={tagIndex} 
-                      className="bg-black text-primary text-xs px-2 py-1 rounded-md border border-primary border-opacity-30"
-                      whileHover={{ 
-                        backgroundColor: "rgba(26, 219, 188, 0.1)",
-                        borderColor: "rgba(26, 219, 188, 0.5)"
-                      }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.05 * tagIndex }}
+                    <span
+                      key={tagIndex}
+                      className="px-2 py-1 bg-primary/10 border border-primary/20 rounded text-xs text-primary"
                     >
                       {tag}
-                    </motion.span>
+                    </span>
                   ))}
                 </div>
-              </div>
-              
-              <div className="flex justify-end mt-auto">
-                {project.live && (
-                  <motion.a 
-                    href={project.live}
-                    className="flex items-center justify-center w-10 h-10 rounded-full bg-black border border-primary border-opacity-30 text-primary mr-2"
-                    whileHover={{ 
-                      scale: 1.1, 
-                      backgroundColor: "rgba(26, 219, 188, 0.1)",
-                      borderColor: "rgba(26, 219, 188, 0.7)"
-                    }}
-                    transition={{ duration: 0.2 }}
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    <FiExternalLink size={18} />
-                  </motion.a>
-                )}
-                {project.github && (
-                  <motion.a 
-                    href={project.github}
-                    className="flex items-center justify-center w-10 h-10 rounded-full bg-black border border-primary border-opacity-30 text-primary"
-                    whileHover={{ 
-                      scale: 1.1, 
-                      backgroundColor: "rgba(26, 219, 188, 0.1)",
-                      borderColor: "rgba(26, 219, 188, 0.7)"
-                    }}
-                    transition={{ duration: 0.2 }}
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    <FiGithub size={18} />
-                  </motion.a>
-                )}
+
+                {/* Links */}
+                <div className="flex space-x-4 pt-4">
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center space-x-1 text-white hover:text-primary transition duration-300"
+                    >
+                      <FiGithub size={16} />
+                      <span className="text-sm">GitHub</span>
+                    </a>
+                  )}
+                  {project.live && (
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center space-x-1 text-white hover:text-primary transition duration-300"
+                    >
+                      <FiExternalLink size={16} />
+                      <span className="text-sm">Live Demo</span>
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
-          </motion.div>
+          </Section3DCard>
         ))}
-      </motion.div>
+      </div>
     </SectionWrapper>
   );
 };

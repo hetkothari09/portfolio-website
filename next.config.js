@@ -10,7 +10,7 @@ const nextConfig = {
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 60,
     dangerouslyAllowSVG: false,
-    unoptimized: process.env.NODE_ENV === 'development',
+    unoptimized: true,
   },
   experimental: {
     optimizeCss: {
@@ -19,6 +19,20 @@ const nextConfig = {
     },
     scrollRestoration: true,
   },
+  // Adding security headers to allow Sketchfab iframe
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: "frame-ancestors 'self' https://sketchfab.com; frame-src 'self' https://sketchfab.com; child-src 'self' https://sketchfab.com;"
+          }
+        ]
+      }
+    ];
+  }
 };
 
 module.exports = nextConfig; 
