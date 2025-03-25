@@ -55,7 +55,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ finishLoading }) => {
             <h1 className="text-4xl md:text-5xl font-bold text-primary mb-2">
               HET KOTHARI
             </h1>
-            <p className="text-slate-400 font-mono">Full Stack Developer</p>
+            {/* <p className="text-slate-400 font-mono">Full Stack Developer</p> */}
           </motion.div>
 
           <div className="flex items-center justify-center mb-8">
